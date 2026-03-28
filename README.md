@@ -99,5 +99,7 @@ owner: object(User Preview)
 ## Майнд-карта
 Данная МК представляет собой набор тестов для тестирования объекта **Post**. Подробная проверка расписана для **Get List** и **Create Post**.
 
-![Alt-текст] ([https://drive.google.com/file/d/1_p0HNo-gVLIHqLYt_Vz4xOlga8YJKTRo/view?usp=sharing](https://drive.google.com/file/d/1DGzunT73QtbNzUzkAZZhHaXp3CRI0R2e/view?usp=sharing))
+![Alt-текст](https://github.com/jsinabdeeva/DummyApi/blob/main/DummyAPI.png)
+
+Также майнд-карту можно [скачать]()
 
