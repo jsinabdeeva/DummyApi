@@ -104,7 +104,7 @@ owner: object(User Preview)
 Также майнд-карту можно [скачать](https://github.com/jsinabdeeva/DummyApi/blob/main/DummyAPI.xmind)
 
 ## Коллекции POSTMAN
-На основе майнд-карты были созданы коллекции в POSTMAN с соответствующими запросами. [Ссылка]() на коллекции.
+На основе майнд-карты были созданы коллекции в POSTMAN с соответствующими запросами. [Ссылка](https://github.com/jsinabdeeva/DummyApi/blob/main/Post.postman_collection.json) на коллекции.
 
 Также было создано окружение с переменными. Окружение можно посмотреть [тут]().
 
