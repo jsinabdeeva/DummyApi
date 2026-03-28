@@ -1,0 +1,557 @@
+{
+	"info": {
+		"_postman_id": "e7438489-2fb1-4ced-b34b-f1688de3f1ba",
+		"name": "Post (Lesson 4)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "34334256"
+	},
+	"item": [
+		{
+			"name": "GetPostList",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200 OK\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code is OK\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 1500ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(1500);\r",
+							"});\r",
+							"\r",
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"//проверка, что ключ data является массивом\r",
+							"pm.test(\"Check body data is array\", function () {\r",
+							" pm.expect(jsonData.data).to.be.an('array');\r",
+							"});\r",
+							"\r",
+							"//проверка, что ключ id является строкой\r",
+							"pm.test(\"Check body data is string\", function () {\r",
+							" pm.expect(jsonData.data[0].id).to.be.an('string');\r",
+							"});\r",
+							"\r",
+							"//проверка, записей на странице 20  (нумерация с 0)\r",
+							"pm.test(\"Check body data[19] is string\", function () {\r",
+							" pm.expect(jsonData.data[19].id).to.be.an('string');\r",
+							"});\r",
+							"\r",
+							"//проверка, что 21 записи не существует (всего 20 на странице, нумерация с 0)\r",
+							"pm.test(\"Check body data[20] is undefined\", function () {\r",
+							" pm.expect(jsonData.data[20]).to.be.an('undefined');\r",
+							"});\r",
+							"\r",
+							"//проверка, количество записей на странице равно 20\r",
+							"pm.test(\"Check limit is 20\", function () {\r",
+							" pm.expect(jsonData.limit).to.eql(20);\r",
+							"});\r",
+							"\r",
+							"//проверка, что мы сейчас находимся на 0 странице\r",
+							"pm.test(\"Check page is 0\", function () {\r",
+							" pm.expect(jsonData.page).to.eql(0);\r",
+							"});\r",
+							"\r",
+							"//проверка, что ключ с общим числом записей (total) является числом\r",
+							"pm.test(\"Check body total is number\", function () {\r",
+							" pm.expect(jsonData.total).to.be.a('number');\r",
+							"});\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/post",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"post"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreatePost",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200 OK\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code is OK\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 5000ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(5000);\r",
+							"});\r",
+							"\r",
+							"//создание переменной jsonData, которая берет данные из тела ответа\r",
+							"var jsonData = pm.response.json(); \r",
+							"\r",
+							"//создание переменной для postId ТОЛЬКО В ДАННОЙ КОЛЛЕКЦИИ\r",
+							"pm.collectionVariables.set(\"postId\", jsonData.id);\r",
+							"\r",
+							"\r",
+							"//Выводим в консоль\r",
+							"/*console.log(pm.collectionVariables.set(\"postId\", \"jsonData.id\"));*/\r",
+							"\r",
+							"//проверка id поста как строки\r",
+							"pm.test(\"Check body Id is string\", function () {\r",
+							"   pm.expect(jsonData.id).to.be.a('string');\r",
+							"});\r",
+							"\r",
+							"//проверка image\r",
+							"pm.test(\"Check image\", function () {\r",
+							"    pm.expect(jsonData.image).to.eql(\"https://img.dummyapi.io/photo-1510414696678-2415ad8474aa.jpg\");\r",
+							"});\r",
+							"\r",
+							"//проверка likes\r",
+							"pm.test(\"Check likes\", function () {\r",
+							"    pm.expect(jsonData.likes).to.eql(43);\r",
+							"});\r",
+							"\r",
+							"//проверка link как строки\r",
+							"pm.test(\"Check link is string\", function () {\r",
+							"   pm.expect(jsonData.link).to.be.a('string');\r",
+							"});\r",
+							"\r",
+							"//проверка тегов \r",
+							"pm.test(\"Check tags\", function () {\r",
+							"    pm.expect(jsonData.tags).to.be.an('array');\r",
+							"});\r",
+							"\r",
+							"//проверка текста\r",
+							"pm.test(\"Check text\", function () {\r",
+							"    pm.expect(jsonData.text).to.eql(\"123123123123\");\r",
+							"});\r",
+							"\r",
+							"//проверка Даты публикации поста как строки\r",
+							"pm.test(\"Check publishDate\", function () {\r",
+							"   pm.expect(jsonData.publishDate).to.be.a('string');\r",
+							"});\r",
+							"\r",
+							"//проверка Даты обновления поста как строки\r",
+							"pm.test(\"Check updatedDate\", function () {\r",
+							"   pm.expect(jsonData.updatedDate).to.be.a('string');\r",
+							"});\r",
+							"\r",
+							"//проверка id автора\r",
+							"pm.test(\"Check owner.id\", function () {\r",
+							"    pm.expect(jsonData.owner.id).to.eql(\"60d0fe4f5311236168a10a0b\");\r",
+							"});\r",
+							"\r",
+							"//проверка title автора\r",
+							"pm.test(\"Check owner.title\", function () {\r",
+							"    pm.expect(jsonData.owner.title).to.eql(\"miss\");\r",
+							"});\r",
+							"\r",
+							"//проверка имени автора\r",
+							"pm.test(\"Check owner.firstName\", function () {\r",
+							"    pm.expect(jsonData.owner.firstName).to.eql(\"Margarita\")\r",
+							"});\r",
+							"\r",
+							"//проверка фамилии автора\r",
+							"pm.test(\"Check owner.lastName\", function () {\r",
+							"    pm.expect(jsonData.owner.lastName).to.eql(\"Vicente\");\r",
+							"});\r",
+							"\r",
+							"//проверка картинки автора\r",
+							"pm.test(\"Check owner.picture\", function () {\r",
+							"    pm.expect(jsonData.owner.picture).to.eql(\"https://randomuser.me/api/portraits/med/women/5.jpg\");\r",
+							"});\r",
+							"\r",
+							"//проверка ключа в консоли\r",
+							"console.log(jsonData.id);\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"text\": \"123123123123\",\r\n    \"image\": \"https://img.dummyapi.io/photo-1510414696678-2415ad8474aa.jpg\",\r\n    \"likes\": 43,\r\n    \"tags\": [\r\n        \"snow\",\r\n        \"ice\",\r\n        \"mountain\"\r\n    ],\r\n    \"owner\": \"60d0fe4f5311236168a10a0b\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/post/create",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"post",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetPostByID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200 OK\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code is OK\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 1500ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(1500);\r",
+							"});\r",
+							"\r",
+							"//создание переменной jsonData, которая берет данные из тела ответа\r",
+							"var jsonData = pm.response.json(); \r",
+							"\r",
+							"//создание переменной для postId ТОЛЬКО В ДАННОЙ КОЛЛЕКЦИИ\r",
+							"pm.collectionVariables.set(\"postId\", jsonData.id);\r",
+							"\r",
+							"//проверка id поста как строки\r",
+							"pm.test(\"Check body Id is string\", function () {\r",
+							"   pm.expect(jsonData.id).to.be.a('string');\r",
+							"});\r",
+							"\r",
+							"//проверка image\r",
+							"pm.test(\"Check image\", function () {\r",
+							"    pm.expect(jsonData.image).to.eql(\"https://img.dummyapi.io/photo-1510414696678-2415ad8474aa.jpg\");\r",
+							"});\r",
+							"\r",
+							"//проверка likes\r",
+							"pm.test(\"Check likes\", function () {\r",
+							"    pm.expect(jsonData.likes).to.eql(43);\r",
+							"});\r",
+							"\r",
+							"//проверка link как строки\r",
+							"pm.test(\"Check link is string\", function () {\r",
+							"   pm.expect(jsonData.link).to.be.a('string');\r",
+							"});\r",
+							"\r",
+							"//проверка тегов \r",
+							"pm.test(\"Check tags\", function () {\r",
+							"    pm.expect(jsonData.tags).to.be.an('array');\r",
+							"});\r",
+							"\r",
+							"//проверка текста\r",
+							"pm.test(\"Check text\", function () {\r",
+							"    pm.expect(jsonData.text).to.eql(\"123123123123\");\r",
+							"});\r",
+							"\r",
+							"//проверка Даты публикации поста как строки\r",
+							"pm.test(\"Check publishDate\", function () {\r",
+							"   pm.expect(jsonData.publishDate).to.be.a('string');\r",
+							"});\r",
+							"\r",
+							"//проверка Даты обновления поста как строки\r",
+							"pm.test(\"Check updatedDate\", function () {\r",
+							"   pm.expect(jsonData.updatedDate).to.be.a('string');\r",
+							"});\r",
+							"\r",
+							"//проверка id автора\r",
+							"pm.test(\"Check owner.id\", function () {\r",
+							"    pm.expect(jsonData.owner.id).to.eql(\"60d0fe4f5311236168a10a0b\");\r",
+							"});\r",
+							"\r",
+							"//проверка title автора\r",
+							"pm.test(\"Check owner.title\", function () {\r",
+							"    pm.expect(jsonData.owner.title).to.eql(\"miss\");\r",
+							"});\r",
+							"\r",
+							"//проверка имени автора\r",
+							"pm.test(\"Check owner.firstName\", function () {\r",
+							"    pm.expect(jsonData.owner.firstName).to.eql(\"Margarita\")\r",
+							"});\r",
+							"\r",
+							"//проверка фамилии автора\r",
+							"pm.test(\"Check owner.lastName\", function () {\r",
+							"    pm.expect(jsonData.owner.lastName).to.eql(\"Vicente\");\r",
+							"});\r",
+							"\r",
+							"//проверка картинки автора\r",
+							"pm.test(\"Check owner.picture\", function () {\r",
+							"    pm.expect(jsonData.owner.picture).to.eql(\"https://randomuser.me/api/portraits/med/women/5.jpg\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/post/{{postId}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"post",
+						"{{postId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetPostList",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200 OK\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code is OK\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 5000ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(5000);\r",
+							"});\r",
+							"\r",
+							"//создание переменной jsonData, которая берет данные из тела ответа\r",
+							"var jsonData = pm.response.json(); \r",
+							"\r",
+							"//создание переменной для postId ТОЛЬКО В ДАННОЙ КОЛЛЕКЦИИ\r",
+							"pm.collectionVariables.set(\"postId\", jsonData.id);\r",
+							"\r",
+							"\r",
+							"//Выводим в консоль\r",
+							"/*console.log(pm.collectionVariables.set(\"postId\", \"jsonData.id\"));*/\r",
+							"\r",
+							"//проверка id поста как строки\r",
+							"pm.test(\"Check body Id is string\", function () {\r",
+							"   pm.expect(jsonData.id).to.be.a('string');\r",
+							"});\r",
+							"\r",
+							"//проверка image\r",
+							"pm.test(\"Check image\", function () {\r",
+							"    pm.expect(jsonData.image).to.eql(\"https://img.dummyapi.io/photo-1510414696678-2415ad8474aa.jpg\");\r",
+							"});\r",
+							"\r",
+							"//проверка likes\r",
+							"pm.test(\"Check likes\", function () {\r",
+							"    pm.expect(jsonData.likes).to.eql(43);\r",
+							"});\r",
+							"\r",
+							"//проверка link как строки\r",
+							"pm.test(\"Check link is string\", function () {\r",
+							"   pm.expect(jsonData.link).to.be.a('string');\r",
+							"});\r",
+							"\r",
+							"//проверка тегов \r",
+							"pm.test(\"Check tags\", function () {\r",
+							"    pm.expect(jsonData.tags).to.be.an('array');\r",
+							"});\r",
+							"\r",
+							"//проверка текста\r",
+							"pm.test(\"Check text\", function () {\r",
+							"    pm.expect(jsonData.text).to.eql(\"abcdefg\");\r",
+							"});\r",
+							"\r",
+							"//проверка Даты публикации поста как строки\r",
+							"pm.test(\"Check publishDate\", function () {\r",
+							"   pm.expect(jsonData.publishDate).to.be.a('string');\r",
+							"});\r",
+							"\r",
+							"//проверка Даты обновления поста как строки\r",
+							"pm.test(\"Check updatedDate\", function () {\r",
+							"   pm.expect(jsonData.updatedDate).to.be.a('string');\r",
+							"});\r",
+							"\r",
+							"//проверка id автора\r",
+							"pm.test(\"Check owner.id\", function () {\r",
+							"    pm.expect(jsonData.owner.id).to.eql(\"60d0fe4f5311236168a10a0b\");\r",
+							"});\r",
+							"\r",
+							"//проверка title автора\r",
+							"pm.test(\"Check owner.title\", function () {\r",
+							"    pm.expect(jsonData.owner.title).to.eql(\"miss\");\r",
+							"});\r",
+							"\r",
+							"//проверка имени автора\r",
+							"pm.test(\"Check owner.firstName\", function () {\r",
+							"    pm.expect(jsonData.owner.firstName).to.eql(\"Margarita\")\r",
+							"});\r",
+							"\r",
+							"//проверка фамилии автора\r",
+							"pm.test(\"Check owner.lastName\", function () {\r",
+							"    pm.expect(jsonData.owner.lastName).to.eql(\"Vicente\");\r",
+							"});\r",
+							"\r",
+							"//проверка картинки автора\r",
+							"pm.test(\"Check owner.picture\", function () {\r",
+							"    pm.expect(jsonData.owner.picture).to.eql(\"https://randomuser.me/api/portraits/med/women/5.jpg\");\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"text\": \"abcdefg\",\r\n    \"image\": \"https://img.dummyapi.io/photo-1510414696678-2415ad8474aa.jpg\",\r\n    \"likes\": 43,\r\n    \"tags\": [\r\n        \"snow\",\r\n        \"ice\",\r\n        \"mountain\"\r\n    ],\r\n    \"owner\": \"60d0fe4f5311236168a10a0b\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/post/{{postId}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"post",
+						"{{postId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeletePost",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200 OK\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code is OK\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 5000ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(5000);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Delete postId\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.id).to.eql(pm.collectionVariables.get(\"postId\"));\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/post/{{postId}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"post",
+						"{{postId}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "apikey",
+		"apikey": [
+			{
+				"key": "value",
+				"value": "{{app-id}}",
+				"type": "string"
+			},
+			{
+				"key": "key",
+				"value": "app-id",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "postId",
+			"value": ""
+		}
+	]
+}
