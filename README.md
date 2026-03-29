@@ -111,6 +111,8 @@ owner: object(User Preview)
 
 ## Автотесты
 Для объекта **Post** созданы автотесты для следующих запросов: (GET) Get Post List, (POST) Create Post, (GET) Get Post by ID, (PUT) Get Post List (update), (DEL) Delete Post by ID. 
+
 Автотесты включают в себя проверки на статус-код ответа, время ответа сервера, соответствие ключей и значений.
 Для запуска автотеста нужно, чтобы все запросы были выбраны и стояли в следующем порядке: (GET) Get Post List, (POST) Create Post, (GET) Get Post by ID, (PUT) Get Post List, (DEL) Delete Post by ID. 
+
 Автотесты можно посмотреть [тут](https://github.com/jsinabdeeva/DummyApi/blob/main/DummyAPI%20(autotest).postman_collection.json).
