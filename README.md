@@ -3,7 +3,7 @@
 
 Объект - **Post** (пост).
 
-Действия: **Get List** (получение списка постов), **Create Post** (создание поста).
+Действия: **Get Post List** (получение списка постов), **Create Post** (создание поста).
 
 Процесс тестирования:
 
@@ -13,7 +13,7 @@
 Тестирование.
 Также составлены автотесты для объекта **Post**.
 
-Запросы: **Get List, Create Post, Get Post by ID, Update Post, Delete Post**.
+Запросы: **Get Post List, Create Post, Get Post by ID, Update Post, Delete Post**.
 
 ## Оглавление
 
@@ -109,7 +109,7 @@ owner: object(User Preview)
 Также было создано окружение с переменными. Окружение можно посмотреть [тут](https://github.com/jsinabdeeva/DummyApi/blob/main/DummyAPI.postman_environment.json).
 
 ## Автотесты
-Для объекта **Post** созданы автотесты для следующих запросов: (GET) Get Post List, (POST) Create Post, (GET) Get Post by ID, (PUT) Get Post List, (DEL) Delete Post by ID. 
+Для объекта **Post** созданы автотесты для следующих запросов: (GET) Get Post List, (POST) Create Post, (GET) Get Post by ID, (PUT) Get Post List (update), (DEL) Delete Post by ID. 
 Автотесты включают в себя проверки на статус-код ответа, время ответа сервера, соответствие ключей и значений.
 Для запуска автотеста нужно, чтобы все запросы были выбраны и стояли в следующем порядке: (GET) Get Post List, (POST) Create Post, (GET) Get Post by ID, (PUT) Get Post List, (DEL) Delete Post by ID. 
 Автотесты можно посмотреть [тут](https://github.com/jsinabdeeva/DummyApi/blob/main/DummyAPI%20(autotest).postman_collection.json).
