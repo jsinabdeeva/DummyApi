@@ -98,7 +98,7 @@ owner: object(User Preview)
 ```
 
 ## Майнд-карта
-Данная МК представляет собой набор тестов для тестирования объекта **Post**. Подробная проверка расписана для **Get List** и **Create Post**.
+Данная МК представляет собой набор тестов для тестирования объекта **Post**. Подробная проверка расписана для **Get Post List** и **Create Post**.
 
 ![Alt-текст](https://github.com/jsinabdeeva/DummyApi/blob/main/DummyAPI.png)
 
